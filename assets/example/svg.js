@@ -17,15 +17,16 @@ cc.Class({
     onLoad: function () {
         var group = this.addComponent('R.group');
 
-        // group.scale = cc.v2(5, 5);
+        //group.scale = cc.v2(2.5, 2.5);
 
-        cc.loader.loadRes('svg/tiger', (err, txt) => {
+        cc.loader.loadRes('svg/tiger', (err, txt) => {        
             if (err) {
                 cc.error(err.toString());
                 return;
             }
             
-            group.loadSvg(txt);
+            group.loadSvg(txt.text);
+            // group.showBoundingBox = true;
         });
     },
 

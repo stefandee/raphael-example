@@ -12,6 +12,7 @@
 //     }
 // });
 
-if (cc.director.setClearColor && !CC_EDITOR) {
-    cc.director.setClearColor( cc.color(216, 216, 216, 255) );
-}
+// no sure why this is necessary, you can set the clear color directly from the camera component of a scene
+// if (cc.director.setClearColor && !CC_EDITOR) {
+// cc.director.setClearColor( cc.color(216, 216, 216, 255) );
+// }

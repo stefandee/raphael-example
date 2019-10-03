@@ -34,8 +34,7 @@ var GroupDefine = {
         this.init();
 
         if (!this.ctx) {
-            this.ctx = new _ccsg.GraphicsNode();
-            this.node._sgNode.addChild(this.ctx);
+            this.ctx = this.node.addComponent(cc.Graphics);
         }
     },
 
@@ -81,7 +80,8 @@ var GroupDefine = {
                     rect = children[i].getWorldBbox();
                 }
                 else {
-                    rect = cc.rectUnion(rect, children[i].getWorldBbox());    
+                    // rect = cc.rectUnion(rect, children[i].getWorldBbox());    
+                    rect.union(rect, children[i].getWorldBbox());                    
                 }
             }
         }

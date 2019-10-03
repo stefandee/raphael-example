@@ -8,7 +8,7 @@ cc.Class({
         path.selected = true;
 
         path.circle(0, 0, 100);
-
+        
         path.makePath();
     },
 });

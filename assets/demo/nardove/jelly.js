@@ -30,7 +30,7 @@ cc.Class({
         this.pathPoints = [this.pathSides];
         this.pathPointsNormals = [this.pathSides];
 
-        this.location = cc.v2(cc.winSize.width/2, cc.winSize.height/2);//cc.v2(-50, Math.random() * cc.winSize.height);
+        this.location = cc.v2(0, 0);//cc.v2(-50, Math.random() * cc.winSize.height);
         this.velocity = cc.v2(0, 0);
         this.acceleration = cc.v2(0, 0);
         
@@ -69,8 +69,11 @@ cc.Class({
         this.path.smooth();
 
         this.path.lineWidth = 5;
-        this.path.lineColor = cc.hexToColor(colours[id].s);
-        this.path.fillColor = cc.hexToColor(colours[id].f);
+        
+        // apparently, in the original code, this code would crash if the number of jellies was higher than the colours array length
+        var coloursLength = colours.length;
+        this.path.lineColor = new cc.Color().fromHEX(colours[id % coloursLength].s);
+        this.path.fillColor = new cc.Color().fromHEX(colours[id % coloursLength].f);
 
 
         // Create tentacles
@@ -105,7 +108,7 @@ cc.Class({
 
         // Rotation alignment
         var orientation = -(Math.atan2(this.velocity.y, this.velocity.x) - Math.PI/2);
-        this.path.rotation = cc.radiansToDegrees(orientation);
+        this.path.rotation = cc.misc.radiansToDegrees(orientation);
 
         // Expansion Contraction
         for (var i = 0; i < this.pathSides; i++) {
@@ -190,18 +193,20 @@ cc.Class({
 
     checkBounds: function() {
         var offset = 60;
-
-        if (this.location.x < -offset) {
-            this.location.x = cc.winSize.width + offset;
+        var halfW = cc.winSize.width / 2;
+        var halfH = cc.winSize.height / 2;
+        
+        if (this.location.x < -halfW - offset) {
+            this.location.x = halfW + offset;
         }
-        if (this.location.x > cc.winSize.width + offset) {
-            this.location.x = -offset;
+        if (this.location.x > halfW + offset) {
+            this.location.x = -halfW - offset;
         }
-        if (this.location.y < -offset) {
-            this.location.y = cc.winSize.height + offset;
+        if (this.location.y < -halfH - offset) {
+            this.location.y = halfH + offset;
         }
-        if (this.location.y > cc.winSize.height + offset) {
-            this.location.y = -offset;
+        if (this.location.y > halfH + offset) {
+            this.location.y = -halfH - offset;
         }
     }
 });

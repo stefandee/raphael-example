@@ -59,8 +59,9 @@ var PathDefine = {
         this.init();
 
         if (!this.ctx) {
-            this.ctx = new _ccsg.GraphicsNode();
-            this.node._sgNode.addChild(this.ctx);
+            //this.ctx = new _ccsg.GraphicsNode();
+            //this.node._sgNode.addChild(this.ctx);
+            this.ctx = this.node.addComponent(cc.Graphics);
 
             this._applyStyle();
         }
@@ -86,7 +87,7 @@ var PathDefine = {
 
     rect: function (x, y, w, h, r) {
         let cmds = this._commands;
-
+        
         if (r) {
             cmds.push(['M', x + r, y]);
             cmds.push(['l', w - r * 2, 0]);
@@ -103,6 +104,9 @@ var PathDefine = {
             cmds.push(['l', w, 0]);
             cmds.push(['l', 0, h]);
             cmds.push(['l', -w, 0]);
+            
+            //cmds.push(['l', 0, -h]);
+            //cmds.push(['l', w, 0]);
         }
 
         cmds.push(['z']);
@@ -189,7 +193,9 @@ var PathDefine = {
         y = y || 0;
         
         var bbox = this.getBbox();
-        this.position = this.position.add(cc.p(-bbox.width/2 - bbox.x + x, -bbox.height/2 - bbox.y + y));
+        
+        // this.position = this.position.add(cc.v2(-bbox.width/2 - bbox.x + x, -bbox.height/2 - bbox.y + y));
+        this.position.addSelf(cc.v2(-bbox.width/2 - bbox.x + x, -bbox.height/2 - bbox.y + y));
     },
 
     _curves: function () {
@@ -286,12 +292,15 @@ var PathDefine = {
         cmds.totalLength = totalLength;
 
         if (totalLength === 0) {
-            cmds.bbox = cmds.worldBbox = cc.rect();
+            cmds.bbox = cc.rect();
+            cmds.worldBbox = cc.rect();
         }
         else {
             var rect = cc.rect(minx, miny, maxx - minx, maxy - miny);
-            cmds.bbox = cc.rectApplyAffineTransform(rect, this.getTransform());
-            cmds.worldBbox = cc.rectApplyAffineTransform(rect, this.getWorldTransform());
+            cmds.bbox = cc.rect();  
+            cmds.worldBbox = cc.rect();
+            cmds.bbox = cc.AffineTransform.transformRect(cmds.bbox, rect, this.getTransform());
+            cmds.worldBbox = cc.AffineTransform.transformRect(cmds.worldBbox, rect, this.getWorldTransform());
         }
     },
 
@@ -406,14 +415,14 @@ var PathDefine = {
             }
 
             if (this.getStyledColor('strokeColor')) {
-                this.ctx.beginPath();
+                // this.ctx.beginPath();
                 this._drawDashPath();
                 this.ctx.stroke();
             }
         }
         else {
             this._drawCommands();
-
+            
             if (this.getStyledColor('fillColor')) this.ctx.fill();
             if (this.getStyledColor('strokeColor')) this.ctx.stroke();
         }

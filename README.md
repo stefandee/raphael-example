@@ -1,28 +1,37 @@
+# Foreword
 
-# Online example
-http://2youyou2.com/raphael-example
+This is a port of Raphael.js vector library examples to Cocos Creator 2.0.x. The latest version this was tested on is Cocos Creator 2.0.10
+
+It's a fork of https://github.com/2youyou2/raphael-example, coded by 2youyou2
 
 # Install
 
-1. git clone https://github.com/2youyou2/raphael-example.git
-2. git submodule update --init
-3. npm install
+1. git clone https://github.com/stefandee/raphael-example.git
+2. git submodule update --init (not necessary at the moment, see below)
+3. npm install (not necessary, all modules are pre-installed)
+
+# Changes
+
+Fixed a bug with "nardove" sample that crashed if more than colours.length "num jellies" was used. Also fixed to generate that jellies starting from the (0, 0) and updated the bounds accordingly.
+
+I have removed assets/lib/greensock, which was very-very old and unused. Consider adding the "gsap" dependency to package.json instead.
+
+Fixed an issue with the "simplfy" sample throwing an exception second time being used from the TestList. Also updated the event handling.
 
 
-# Examples for [ccc.raphael](https://github.com/2youyou2/ccc.raphael)
+# Known Issues
 
-- line morph   
-![animate-line](https://github.com/2youyou2/raphael-example/blob/master/screenshots/animate-line.gif?raw=true)
+Don't use the submodule system and don't use the panel to copy the sources to the assets folder. I might have to fork the submodules as well in case this is necessary.
 
-- dash-line   
-![dash-line](https://github.com/2youyou2/raphael-example/blob/master/screenshots/dash-line.gif?raw=true)
+The svg rendering is only partly working. The "tiger" sample works fine, but "dribbble", "raphael" and "square_with_hole". This seems like a rendering limitation: the svg is translated into cc.Graphics commands that don't have support for "fill-rule: evenodd" that would be necessary to render those samples.
 
-- jelly   
-![jelly](https://github.com/2youyou2/raphael-example/blob/master/screenshots/jelly.gif?raw=true)
+The dashed line sample has an issue rendering the bottom edge of the rectangle. The problems seems to stem from assets/raphael/utils/R.dash.js. Perhaps the deprecated cc.pointApplyAffineTransform didn't work the same as cc.AffineTransform.transformVec2?
 
-- simplify   
-![simplify](https://github.com/2youyou2/raphael-example/blob/master/screenshots/simplify.gif?raw=true)
+If you do figure out, I'd appreciate any help on these.
 
-- tiger   
-![tiger](https://github.com/2youyou2/raphael-example/blob/master/screenshots/tiger.png?raw=true)
+# Usage
+
+If you just want to use it in your own Cocos Creator project, copy over assets/raphael folder and that's about it.
+
+
 

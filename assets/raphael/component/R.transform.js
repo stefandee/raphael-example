@@ -3,12 +3,12 @@ var Transform = {
 
     properties: {
         _scale: {
-            default: cc.v2(1, 1),
-            type: cc.Vec2
+            default: cc.v2(1, 1)
+            // type: cc.Vec2
         },
         _position: {
-            default: cc.v2(0,0),
-            type: cc.Vec2
+            default: cc.v2(0,0)
+            // type: cc.Vec2
         },
         _rotation: 0,
         
@@ -125,16 +125,18 @@ var Transform = {
         }
 
         var tempPoint = cc.v2();
+        var transformTempPoint = cc.v2();
 
         for (var i = 0, ii = cmd.length / 2; i < ii; i++) {
             var j = i*2;
             tempPoint.x = cmd[j];
             tempPoint.y = cmd[j + 1];
 
-            tempPoint = cc.pointApplyAffineTransform(tempPoint, t);
+            // tempPoint = cc.pointApplyAffineTransform(tempPoint, t);
+            cc.AffineTransform.transformVec2(transformTempPoint, tempPoint, t);
 
-            cmd[j] = tempPoint.x;
-            cmd[j+1] = tempPoint.y;
+            cmd[j] = transformTempPoint.x;
+            cmd[j+1] = transformTempPoint.y;
         }
 
         return cmd;
@@ -184,7 +186,10 @@ var Transform = {
 
     getWorldTransform: function () {
         if (this.parent) {
-            return cc.affineTransformConcat(this.parent.getWorldTransform(), this.getTransform());
+            var parentWorldTransform = cc.AffineTransform.create();
+            cc.AffineTransform.concat(parentWorldTransform, this.parent.getWorldTransform(), this.getTransform());
+            
+            return parentWorldTransform;
         }
 
         return this.getTransform();
@@ -228,7 +233,7 @@ var Transform = {
         }
 
         if (this.parent) {
-            this._worldTransform = cc.affineTransformConcat(this.parent._worldTransform, this._transform);
+            /*this._worldTransform = */cc.AffineTransform.concat(this._worldTransform, this.parent._worldTransform, this._transform);
         }
         else {
             this._worldTransform = this._transform;

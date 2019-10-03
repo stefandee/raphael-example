@@ -14,5 +14,6 @@ cc.Class({
         path.makePath();
 
         group.rotation = 45;
+        group.showBoundingBox = true;
     },
 });

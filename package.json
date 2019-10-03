@@ -1,13 +1,14 @@
 {
   "name": "raphael-example",
-  "version": "0.0.1",
-  "language": "zh",
+  "version": "0.9.0",
+  "language": "en",
   "description": "Raphael example.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/2youyou2/raphael-example.git"
+    "url": "https://github.com/stefandee/raphael-example.git"
   },
-  "author": "2youyou2",
+  "author": "Stefan Dicu",
+  "license": "(MIT OR Apache-2.0)",
   "dependencies": {
     "cheerio": "0.20.0",
     "domhandler": "2.3.0"

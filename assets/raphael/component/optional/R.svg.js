@@ -18,9 +18,9 @@ function toNumberArray (s) {
 
 function parseStyle (current, name, value) {
     if (name === 'fill') {
-        current.fillColor = value === 'none' ? null : cc.hexToColor(value);
+        current.fillColor = value === 'none' ? null : new cc.Color().fromHEX(value);
     } else if (name === 'stroke') {
-        current.strokeColor = value === 'none' ? null : cc.hexToColor(value);
+        current.strokeColor = value === 'none' ? null : new cc.Color().fromHEX(value);
     } else if (name === 'stroke-width') {
         current.lineWidth = parseFloat(value);
     } else if (name === 'stroke-linejoin') {
@@ -38,8 +38,9 @@ function parseStyle (current, name, value) {
 
 function parseNode (node, parent) {
     var current;
-
+    
     var tagName = node.tagName;
+    
     if (tagName === 'g') {
         current = parent.addGroup();
     }
@@ -105,7 +106,7 @@ var Svg = {
         if (typeof string !== 'string') {
             return;
         }
-
+        
         var $;
         try {
             $ = cheerio.load(string);
