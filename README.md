@@ -16,7 +16,7 @@ Fixed a bug with "nardove" sample that crashed if more than colours.length "num 
 
 I have removed assets/lib/greensock, which was very-very old and unused. Consider adding the "gsap" dependency to package.json instead.
 
-Fixed an issue with the "simplfy" sample throwing an exception second time being used from the TestList. Also updated the event handling.
+Fixed an issue with the "simplify" sample throwing an exception second time being used from the TestList. Also updated the event handling.
 
 
 # Known Issues
